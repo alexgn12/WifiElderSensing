@@ -1,104 +1,128 @@
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--color-gray-50);
-}
-
-.content {
-  flex: 1;
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 800px;
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
   width: 100%;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.pageHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.header {
+  margin-bottom: 2rem;
 }
 
-.summary {
-  font-size: 14px;
-  color: var(--color-gray-500);
-}
-
-.tabs {
-  display: flex;
-  gap: 4px;
-  border-bottom: 2px solid var(--color-gray-200);
-  padding-bottom: 0;
-}
-
-.tab {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-gray-500);
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  transition: color 0.12s, border-color 0.12s;
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-}
-
-.tab:hover {
-  color: var(--color-gray-700);
-  background: var(--color-gray-100);
-}
-
-.tab.tabActive {
-  color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
-  font-weight: 600;
-}
-
-.tabCount {
-  background: var(--color-gray-200);
-  color: var(--color-gray-600);
-  font-size: 11px;
+.title {
+  font-size: 1.8rem;
   font-weight: 700;
-  padding: 1px 7px;
-  border-radius: 999px;
+  color: #1e293b;
+  margin: 0;
 }
 
-.tab.tabActive .tabCount {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
+.subtitle {
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+/* Reutilizamos el grid de las estadísticas para las pestañas */
+.tabsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tabCard {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabCard.active {
+  border-color: #10b981;
+  background: #f0fdf4;
+  color: #10b981;
+}
+
+.countBadge {
+  margin-left: auto;
+  background: #fee2e2;
+  color: #ef4444;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Estilo de la "caja grande" igual que la gráfica */
+.mainCard {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
 }
 
 .listStack {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
-.empty {
+.alertItem {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 48px 24px;
-  background: #fff;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-md);
-  color: var(--color-gray-500);
-  font-size: 14px;
+  gap: 16px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.alertIndicator {
+  width: 8px;
+  height: 8px;
+  background: #f59e0b;
+  border-radius: 50%;
+}
+
+.alertContent {
+  flex: 1;
+}
+
+.alertText {
+  margin: 0;
+  color: #334155;
   font-size: 15px;
 }
 
-.empty span {
-  font-size: 36px;
+.alertTime {
+  font-size: 12px;
+  color: #94a3b8;
 }
 
-@media (max-width: 520px) {
-  .content { padding: 16px; }
+.newBadge {
+  background: #fef3c7;
+  color: #b45309;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -1,23 +1,39 @@
-import { useAuth } from '../../hooks/useAuth.js'
-import Badge from '../ui/Badge.jsx'
-import styles from './TopBar.module.css'
+import React, { useContext } from 'react';
+import { auth } from '../../config/firebase';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../store/AuthContext';
+import styles from './TopBar.module.css';
 
-export default function TopBar({ title }) {
-  const { user } = useAuth()
-  const firstName = user?.displayName?.split(' ')[0] ?? 'Usuario'
+const TopBar = () => {
+  const navigate = useNavigate();
+  // Asegúrate de usar 'userName' o el campo que tengas en tu context
+  const { userName, logoutAction } = useContext(AuthContext); 
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login');
+    } catch (error) {
+      console.error("Error logout:", error);
+    }
+  };
 
   return (
-    <header className={styles.topbar}>
-      <div className={styles.left}>
-        {title && <h1 className={styles.title}>{title}</h1>}
-        {!title && <p className={styles.greeting}>Hola, <strong>{firstName}</strong> 👋</p>}
+    <header className={styles.topBar}>
+      <div className={styles.sectionLeft}>
+        {/* Aquí puedes poner un saludo dinámico */}
+        <span className={styles.welcome}>Panel de Control</span>
       </div>
-      <div className={styles.right}>
-        <Badge label="Sistema activo" variant="success" />
-        <div className={styles.avatar} title={user?.displayName}>
-          {firstName[0]}
-        </div>
+
+      <div className={styles.sectionRight}>
+        <span className={styles.userEmail}>{userName}</span>
+        <button onClick={handleLogout} className={styles.btnLogout}>
+          Cerrar Sesión
+        </button>
       </div>
     </header>
-  )
-}
+  );
+};
+
+export default TopBar;

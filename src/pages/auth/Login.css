@@ -1,0 +1,192 @@
+/* Contenedor principal a pantalla completa */
+.login-page-wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Imagen de fondo */
+  background-image: linear-gradient(135deg, rgba(45, 106, 79, 0.8) 0%, rgba(27, 67, 50, 0.9) 100%), 
+                    url('../../assets/images/fondo-login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+/* La tarjeta central (El "Cajón") */
+.login-glass-card {
+  background: rgba(255, 255, 255, 0.9); /* Un pelín transparente */
+  backdrop-filter: blur(10px); /* Efecto cristal esmerilado */
+  -webkit-backdrop-filter: blur(10px); /* Para Safari */
+  
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  
+  /* Animación de entrada suave */
+  animation: slideIn 0.6s ease-out;
+}
+
+/* Animación */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos de la marca */
+.brand-section {
+  margin-bottom: 2.5rem;
+}
+
+.brand-title {
+  color: #2d6a4f; /* Verde ElderSense */
+  font-weight: 800;
+  font-size: 2.5rem;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.brand-subtitle {
+  color: #555;
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+  font-weight: 300;
+}
+
+/* Inputs y Formulario */
+.form-group {
+  text-align: left;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #2d6a4f;
+  box-shadow: 0 0 10px rgba(45, 106, 79, 0.2);
+}
+
+/* Botón de Enviar */
+.btn-login {
+  width: 100%;
+  padding: 1.1rem;
+  background-color: #2d6a4f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-login:hover {
+  background-color: #1b4332;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(27, 67, 50, 0.4);
+}
+
+/* Mensaje de Error */
+.error-message {
+  color: #d90429;
+  font-size: 0.85rem;
+  background-color: rgba(217, 4, 41, 0.1);
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #d90429;
+}
+
+/* Footer del Login */
+.login-footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.login-footer a {
+  color: #2d6a4f;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.login-footer a:hover {
+  color: #1b4332;
+  text-decoration: underline;
+}
+
+/* Contenedor principal de las pestañas */
+.login-tabs {
+  display: flex;
+  width: 100%;
+  margin-bottom: 25px; /* Espacio antes del formulario */
+  border-radius: 8px;
+  overflow: hidden; /* Para que las esquinas redondeadas funcionen bien */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Borde muy suave */
+}
+
+/* Estilo general para ambos botones/pestañas */
+.login-tabs button {
+  flex: 1; /* Cada una ocupa la mitad del ancho */
+  padding: 12px 15px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit; /* Hereda la letra de ElderSense */
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease; /* Animación suave al cambiar */
+  text-align: center;
+}
+
+/* --- ESTADO INACTIVO (El que NO está seleccionado) --- */
+.tab-inactive {
+  background-color: rgba(0, 0, 0, 0.03); /* Un gris muy suave */
+  color: #6c757d; /* Color de letra grisáceo */
+}
+
+.tab-inactive:hover {
+  background-color: rgba(0, 0, 0, 0.06); /* Se oscurece un pelín al pasar el ratón */
+  color: #495057;
+}
+
+/* --- ESTADO ACTIVO (El que SÍ está seleccionado) --- */
+.tab-active {
+  background-color: #386953; /* El mismo verde oscuro de tu botón de ElderSense */
+  color: white; /* Letra blanca para que contraste */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15); /* Sombra interna para dar profundidad */
+}
+
+/* Ajustes finales para que los bordes de los inputs y labels sigan bien */
+.form-group {
+  margin-bottom: 20px;
+}

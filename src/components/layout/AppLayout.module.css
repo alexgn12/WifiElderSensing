@@ -1,19 +1,21 @@
 .layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f8fafc; /* Fondo grisáceo muy suave para que resalten las cards */
+  overflow: hidden;
 }
 
-.main {
-  flex: 1;
-  margin-left: var(--sidebar-width);
-  min-height: 100vh;
+.mainWrapper {
+  flex-grow: 1; /* Ocupa todo el espacio restante a la derecha de la sidebar */
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .main {
-    margin-left: 0;
-    padding-bottom: var(--mobile-nav-height);
-  }
+.contentArea {
+  flex-grow: 1;
+  padding: 2.5rem; /* Da aire alrededor de todo el contenido */
+  overflow-y: auto; /* Permite scroll solo en el contenido, no en toda la web */
 }
