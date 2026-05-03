@@ -1,100 +1,112 @@
 .sidebar {
   width: var(--sidebar-width);
   height: 100vh;
-  background: #fff;
-  border-right: 1px solid var(--color-gray-200);
+  /* Usamos un fondo verde muy suave basado en tu marca */
+  background: #f0f9f6; 
+  border-right: 1px solid var(--color-primary-light);
   display: flex;
   flex-direction: column;
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
 }
 
 .brand {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  padding: 20px 20px 16px;
-  border-bottom: 1px solid var(--color-gray-100);
-}
-
-.brandIcon {
-  font-size: 24px;
+  padding: 1.5rem;
+  /* Línea divisoria sutil en verde */
+  border-bottom: 1px solid var(--color-primary-light);
 }
 
 .brandName {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  letter-spacing: -0.5px;
+}
+
+.closeBtn {
+  background: var(--color-primary-light);
+  border: none;
   color: var(--color-primary);
-  letter-spacing: -0.02em;
+  cursor: pointer;
+  padding: 6px;
+  display: none;
+  align-items: center;
+  border-radius: var(--radius-sm);
 }
 
 .nav {
   flex: 1;
-  padding: 12px 10px;
+  padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.4rem;
 }
 
 .link {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-md);
   color: var(--color-gray-600);
-  font-size: 15px;
+  text-decoration: none;
   font-weight: 500;
-  transition: background 0.12s, color 0.12s;
-  position: relative;
+  transition: all 0.2s ease;
 }
 
 .link:hover {
-  background: var(--color-gray-100);
-  color: var(--color-gray-800);
-}
-
-.link.active {
   background: var(--color-primary-light);
   color: var(--color-primary-dark);
-  font-weight: 600;
 }
 
-.linkIcon {
-  font-size: 18px;
-  width: 24px;
-  text-align: center;
+/* El estado activo ahora es VERDE, no azul */
+.link.active {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(29, 158, 117, 0.25);
 }
 
-.linkLabel {
-  flex: 1;
+.link.active .linkIcon {
+  filter: brightness(0) invert(1); /* Si usas emojis, esto no afecta, si usas SVG sí */
 }
 
 .badge {
-  background: var(--color-warning);
+  background: var(--color-danger); /* Para que resalte sobre el verde */
   color: #fff;
-  font-size: 11px;
+  font-size: 0.7rem;
   font-weight: 700;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 999px;
-  min-width: 20px;
-  text-align: center;
+  margin-left: auto;
 }
 
 .footer {
-  padding: 14px 20px;
-  border-top: 1px solid var(--color-gray-100);
+  padding: 1.5rem;
+  border-top: 1px solid var(--color-primary-light);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .version {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--color-gray-400);
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
   .sidebar {
-    display: none;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+  }
+  .closeBtn {
+    display: flex;
   }
 }

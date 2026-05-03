@@ -3,12 +3,13 @@ import { auth } from '../../config/firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../store/AuthContext';
+import { Menu } from 'lucide-react'; // Paso 1: Importar icono
 import styles from './TopBar.module.css';
 
-const TopBar = () => {
+// Paso 2: Recibir onMenuClick como prop
+const TopBar = ({ onMenuClick }) => {
   const navigate = useNavigate();
-  // Asegúrate de usar 'userName' o el campo que tengas en tu context
-  const { userName, logoutAction } = useContext(AuthContext); 
+  const { userName } = useContext(AuthContext); 
 
   const handleLogout = async () => {
     try {
@@ -22,7 +23,10 @@ const TopBar = () => {
   return (
     <header className={styles.topBar}>
       <div className={styles.sectionLeft}>
-        {/* Aquí puedes poner un saludo dinámico */}
+        {/* Paso 3: Botón de hamburguesa */}
+        <button className={styles.menuBtn} onClick={onMenuClick}>
+          <Menu size={24} />
+        </button>
         <span className={styles.welcome}>Panel de Control</span>
       </div>
 

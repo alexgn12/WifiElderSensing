@@ -1,13 +1,38 @@
 .topBar {
-  width: 100%;
-  height: 70px;
-  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: 64px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sectionLeft {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Separa izquierda de derecha */
-  padding: 0 2rem;
-  border-bottom: 1px solid #e2e8f0;
-  box-sizing: border-box;
+  gap: 1rem;
+}
+
+/* El botón de hamburguesa */
+.menuBtn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: none; /* ESCONDIDO POR DEFECTO EN PC */
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.menuBtn:hover {
+  background: #f1f5f9;
+}
+
+.welcome {
+  font-weight: 600;
+  color: #1e293b;
 }
 
 .sectionRight {
@@ -19,21 +44,32 @@
 .userEmail {
   font-size: 0.9rem;
   color: #64748b;
-  font-weight: 500;
 }
 
 .btnLogout {
-  background-color: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fee2e2;
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.2s;
 }
 
 .btnLogout:hover {
-  background-color: #dc2626;
-  color: white;
+  background: #fecaca;
+}
+
+/* --- MÓVIL --- */
+@media (max-width: 768px) {
+  .menuBtn {
+    display: flex; /* APARECE EN MÓVIL */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .userEmail {
+    display: none; /* Opcional: esconder el nombre en móvil para que no sature */
+  }
 }
