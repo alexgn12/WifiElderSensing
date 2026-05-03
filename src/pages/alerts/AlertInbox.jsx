@@ -1,84 +1,116 @@
-import { useState } from 'react'
-import TopBar from '../../components/layout/TopBar.jsx'
-import AlertRow from '../../components/ui/AlertRow.jsx'
-import { useAlerts } from '../../hooks/useAlerts.js'
-import styles from './AlertInbox.module.css'
-
-const TABS = [
-  { key: 'all',      label: 'Todas' },
-  { key: 'unread',   label: 'Sin leer' },
-  { key: 'fall',     label: 'Caídas' },
-]
+import React, { useState, useEffect } from 'react';
+import styles from './AlertInbox.module.css';
+// Añadimos Trash2 a la lista de iconos
+import { Bell, ShieldAlert, History, Trash2 } from 'lucide-react'; 
+import { db } from '../../config/firebase'; 
+// Añadimos doc y deleteDoc para poder borrar
+import { collection, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
 
 export default function AlertInbox() {
-  const { alerts, markRead, unreadCount } = useAlerts()
-  const [activeTab, setActiveTab] = useState('all')
+  const [activeTab, setActiveTab] = useState('caidas');
+  const [alerts, setAlerts] = useState([]); 
+  const [loading, setLoading] = useState(true);
 
-  const filtered = [...alerts]
-    .sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt))
-    .filter((a) => {
-      if (activeTab === 'unread') return !a.read
-      if (activeTab === 'fall')   return a.type === 'fall'
-      return true
-    })
+  // --- FUNCIÓN PARA BORRAR LA ALERTA ---
+  const handleDeleteAlert = async (alertId) => {
+    // Confirmación rápida
+    if (window.confirm("¿Deseas eliminar esta alerta? El familiar ya habrá verificado el estado.")) {
+      try {
+        const alertRef = doc(db, "alerts", alertId);
+        await deleteDoc(alertRef);
+        console.log("Alerta borrada de Firebase");
+      } catch (error) {
+        console.error("Error al borrar:", error);
+      }
+    }
+  };
 
-  function handleAlertClick(id) {
-    markRead(id)
-  }
+  useEffect(() => {
+    console.log("Conectando con la colección 'alerts'...");
+    const q = query(collection(db, "alerts")); 
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      console.log("Datos recibidos de Firebase:", data);
+      setAlerts(data);
+      setLoading(false);
+    }, (error) => {
+      console.error("Error en Firebase:", error);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <div className={styles.page}>
-      <TopBar title="Bandeja de alertas" />
-      <div className={styles.content}>
-        <div className={styles.pageHeader}>
-          <p className={styles.summary}>
-            {unreadCount > 0
-              ? `${unreadCount} alerta${unreadCount > 1 ? 's' : ''} sin leer`
-              : 'Todas las alertas leídas'}
-          </p>
-        </div>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Centro de Alertas</h1>
+        <p className={styles.subtitle}>Historial de incidencias detectadas por el sistema.</p>
+      </header>
 
-        {/* Tabs */}
-        <div className={styles.tabs}>
-          {TABS.map(({ key, label }) => {
-            const count = key === 'unread'
-              ? alerts.filter((a) => !a.read).length
-              : key === 'fall'
-              ? alerts.filter((a) => a.type === 'fall').length
-              : alerts.length
+      <div className={styles.tabsGrid}>
+        <button 
+          className={`${styles.tabCard} ${activeTab === 'caidas' ? styles.active : ''}`}
+          onClick={() => setActiveTab('caidas')}
+        >
+          <ShieldAlert size={20} />
+          <span>Caídas</span>
+          <span className={styles.countBadge}>{alerts.length}</span>
+        </button>
+        
+        <button 
+          className={`${styles.tabCard} ${activeTab === 'desconexiones' ? styles.active : ''}`}
+          onClick={() => setActiveTab('desconexiones')}
+        >
+          <History size={20} />
+          <span>Desconexiones</span>
+        </button>
+      </div>
 
-            return (
-              <button
-                key={key}
-                className={`${styles.tab} ${activeTab === key ? styles.tabActive : ''}`}
-                onClick={() => setActiveTab(key)}
-              >
-                {label}
-                {count > 0 && (
-                  <span className={styles.tabCount}>{count}</span>
-                )}
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Alert list */}
-        <div className={styles.listStack}>
-          {filtered.length === 0 && (
-            <div className={styles.empty}>
-              <span>🎉</span>
-              <p>No hay alertas en esta sección</p>
-            </div>
-          )}
-          {filtered.map((alert) => (
-            <AlertRow
-              key={alert.id}
-              alert={alert}
-              onClick={handleAlertClick}
-            />
-          ))}
+      <div className={styles.listSection}>
+        <div className={styles.mainCard}>
+          <div className={styles.cardHeader}>
+            <Bell size={20} />
+            <h3>Alertas Recientes</h3>
+          </div>
+          
+          <div className={styles.listStack}>
+            {loading ? (
+              <p>Cargando datos de Firebase...</p>
+            ) : alerts.length > 0 ? (
+              alerts.map((alert) => (
+                <div key={alert.id} className={styles.alertItem}>
+                  <div className={styles.alertIndicator} />
+                  <div className={styles.alertContent}>
+                    <p className={styles.alertText}>
+                      {alert.type === 'caida' ? 'Posible caída detectada' : 'Aviso del sistema'} en <strong>{alert.location || 'Zona desconocida'}</strong>
+                    </p>
+                    <span className={styles.alertTime}>Estado: {alert.status}</span>
+                  </div>
+                  
+                  {/* BOTÓN DE ELIMINAR */}
+                  <div className={styles.alertActions}>
+                    {alert.status === 'nueva' && <span className={styles.newBadge}>Nueva</span>}
+                    <button 
+                      className={styles.deleteButton}
+                      onClick={() => handleDeleteAlert(alert.id)}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No hay alertas en la base de datos.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

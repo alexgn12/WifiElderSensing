@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useAlerts } from '../../hooks/useAlerts.js'
+import { X } from 'lucide-react' // Importamos la X de cierre
 import styles from './Sidebar.module.css'
 
 const NAV_ITEMS = [
@@ -8,15 +9,24 @@ const NAV_ITEMS = [
   { to: '/alerts',    icon: '🔔', label: 'Alertas' },
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, toggleSidebar }) {
   const { unreadCount } = useAlerts()
 
   return (
-    <aside className={styles.sidebar}>
+    // Si isOpen es false, se añade la clase styles.closed
+    <aside className={`${styles.sidebar} ${!isOpen ? styles.closed : ''}`}>
       <div className={styles.brand}>
-        <span className={styles.brandIcon}>📶</span>
-        <span className={styles.brandName}>ElderSense</span>
+        <div className={styles.brandMain}>
+          <span className={styles.brandIcon}>📶</span>
+          <span className={styles.brandName}>ElderSense</span>
+        </div>
+        
+        {/* Botón de cerrar que solo se verá en el Sidebar */}
+        <button className={styles.closeBtn} onClick={toggleSidebar}>
+          <X size={20} />
+        </button>
       </div>
+
       <nav className={styles.nav}>
         {NAV_ITEMS.map(({ to, icon, label }) => (
           <NavLink
@@ -34,6 +44,7 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
+
       <div className={styles.footer}>
         <span className={styles.version}>v0.1.0 — Mock</span>
       </div>

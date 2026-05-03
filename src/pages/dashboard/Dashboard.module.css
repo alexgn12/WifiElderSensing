@@ -1,107 +1,141 @@
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--color-gray-50);
-}
-
-.content {
-  flex: 1;
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  max-width: 1200px;
+/* Contenedor principal del Dashboard */
+.container {
   width: 100%;
+  max-width: 1300px; /* Un poco más ancho para que respire en PC */
+  margin: 0 auto;
+  padding: 2rem; /* Más aire en los laterales */
+  animation: fadeIn 0.5s ease-out;
+  box-sizing: border-box;
 }
 
-.metricsGrid {
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: 2.2rem; /* Más potente */
+  font-weight: 800;
+  color: var(--color-gray-900);
+  letter-spacing: -1px; /* Toque moderno */
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--color-gray-500);
+  font-size: 1.05rem;
+  margin-top: 0.4rem;
+}
+
+/* Rejilla de tarjetas superiores */
+.statsGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
-@media (max-width: 1000px) {
-  .metricsGrid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 520px) {
-  .metricsGrid { grid-template-columns: 1fr; }
-  .content { padding: 16px; }
-}
-
-.section {
+.statCard {
+  background: white;
+  padding: 1.8rem; /* Más espacio interno */
+  border-radius: var(--radius-lg);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  border: 1px solid var(--color-gray-100);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-primary-light);
+}
+
+.iconContainer {
+  padding: 14px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.statCard:hover .iconContainer {
+  transform: scale(1.1); /* El icono crece un poco al pasar el ratón */
+}
+
+/* Colores adaptados a tu paleta verde ElderSense */
+.blue { 
+  background: var(--color-info-light); 
+  color: var(--color-info); 
+}
+
+.green { 
+  background: var(--color-primary-light); 
+  color: var(--color-primary); 
+}
+
+.statInfo span {
+  font-size: 0.9rem;
+  color: var(--color-gray-500);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statInfo p {
+  font-size: 1.8rem; /* Números más grandes */
+  font-weight: 800;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+/* Tarjetas de gráficas */
+.chartCard {
+  background: white;
+  border-radius: 24px; /* Bordes más redondeados */
+  padding: 2rem;
+  border: 1px solid var(--color-gray-100);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
   gap: 12px;
-}
-
-.sectionHeader {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.sectionTitle {
-  font-size: 17px;
-  font-weight: 700;
+  margin-bottom: 2rem;
   color: var(--color-gray-800);
 }
 
-.sectionSub {
-  font-size: 13px;
-  color: var(--color-gray-400);
+.chartHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
-.linkBtn {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-primary);
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+/* --- AJUSTES PARA MÓVIL --- */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.2rem;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+  }
 
-.linkBtn:hover { text-decoration: underline; }
+  .statsGrid {
+    gap: 1rem;
+  }
 
-.card {
-  background: #fff;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-gray-200);
-  padding: 20px;
-}
+  .statCard {
+    padding: 1.2rem;
+  }
 
-.listStack {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.twoCol {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-}
-
-@media (max-width: 900px) {
-  .twoCol { grid-template-columns: 1fr; }
-}
-
-.placeholder {
-  color: var(--color-gray-400);
-  font-size: 14px;
-  padding: 20px;
-  text-align: center;
-}
-
-.empty {
-  color: var(--color-gray-400);
-  font-size: 14px;
-  padding: 16px;
-  text-align: center;
-  background: #fff;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-md);
+  .chartCard {
+    padding: 1.2rem;
+    border-radius: 16px;
+  }
 }

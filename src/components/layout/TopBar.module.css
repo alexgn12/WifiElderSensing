@@ -1,49 +1,75 @@
-.topbar {
+.topBar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
-  height: var(--topbar-height);
-  background: #fff;
-  border-bottom: 1px solid var(--color-gray-200);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: 64px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.left {}
-
-.title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-gray-800);
-}
-
-.greeting {
-  font-size: 16px;
-  color: var(--color-gray-600);
-}
-
-.greeting strong {
-  color: var(--color-gray-800);
-}
-
-.right {
+.sectionLeft {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 1rem;
 }
 
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #fff;
+/* El botón de hamburguesa */
+.menuBtn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: none; /* ESCONDIDO POR DEFECTO EN PC */
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.menuBtn:hover {
+  background: #f1f5f9;
+}
+
+.welcome {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sectionRight {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 15px;
-  flex-shrink: 0;
+  gap: 1.5rem;
+}
+
+.userEmail {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.btnLogout {
+  padding: 0.5rem 1rem;
+  background: #fee2e2;
+  color: #ef4444;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnLogout:hover {
+  background: #fecaca;
+}
+
+/* --- MÓVIL --- */
+@media (max-width: 768px) {
+  .menuBtn {
+    display: flex; /* APARECE EN MÓVIL */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .userEmail {
+    display: none; /* Opcional: esconder el nombre en móvil para que no sature */
+  }
 }
